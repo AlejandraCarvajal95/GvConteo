@@ -1,0 +1,47 @@
+# Ignora los archivos de configuración del editor
+.vscode/
+.idea/
+*.code-workspace
+
+# Archivos y carpetas temporales de Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+
+# Archivos compilados y carpetas de distribución
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Archivos de especificaciones de PyInstaller (obsoletos)
+*.spec
+
+# Archivos de dependencias y entornos virtuales
+.env
+.venv/
+ENV/
+env/
+venv/
+Pipfile
+Pipfile.lock
+
+# Archivos de salidas generados por la aplicación
+*.xlsx
+*.html
+*.zip
+*.txt
+!requirements.txt
+!README.txt
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos de datos de prueba (opcional)
+# test_data/
+# *.csv

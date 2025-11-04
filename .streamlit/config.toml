@@ -1,0 +1,15 @@
+[theme]
+# Colores basados en el logo de GRUPOVIAL (rojo y negro)
+primaryColor = "#E63946"        # Rojo del logo (botones principales, enlaces)
+backgroundColor = "#FFFFFF"      # Blanco limpio para el fondo
+secondaryBackgroundColor = "#F8F9FA"  # Gris muy claro para áreas secundarias
+textColor = "#212529"           # Negro/gris oscuro para texto
+font = "sans serif"
+
+[server]
+headless = true
+port = 8501
+enableXsrfProtection = true
+
+[browser]
+gatherUsageStats = false
