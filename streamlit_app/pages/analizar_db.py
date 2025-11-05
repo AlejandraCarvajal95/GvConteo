@@ -124,21 +124,41 @@ def show():
     with tab1:
         col1, col2, col3 = st.columns(3)
         
+        import datetime
         with col1:
             st.markdown("**FECHA**")
             fechas_opciones = filtros.get('FECHA', [])
             if fechas_opciones:
+                # Prepare display strings for dates to avoid Streamlit type issues
+                fechas_display = []
+                fecha_map = {}
+                for f in fechas_opciones:
+                    if isinstance(f, (pd.Timestamp, datetime.datetime, datetime.date)):
+                        disp = pd.to_datetime(f).strftime('%Y-%m-%d')
+                    else:
+                        disp = str(f)
+                    # ensure uniqueness by appending index if necessary
+                    key = disp
+                    i = 1
+                    while key in fecha_map:
+                        key = f"{disp} ({i})"
+                        i += 1
+                    fecha_map[key] = f
+                    fechas_display.append(key)
+
                 seleccionar_todas_fechas = st.checkbox("Seleccionar todas las fechas", value=True)
                 if seleccionar_todas_fechas:
+                    # Use raw fecha objects for processing
                     fechas_seleccionadas = fechas_opciones
                 else:
-                    fechas_seleccionadas = st.multiselect(
+                    seleccion_display = st.multiselect(
                         "Selecciona fechas:",
-                        options=fechas_opciones,
+                        options=fechas_display,
                         default=[],
                         label_visibility="collapsed",
-                        placeholder="Selecciona opciones"
                     )
+                    # Map back to original objects
+                    fechas_seleccionadas = [fecha_map[s] for s in seleccion_display]
             else:
                 fechas_seleccionadas = []
                 st.warning("No hay fechas disponibles")
