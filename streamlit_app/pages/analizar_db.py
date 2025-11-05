@@ -30,6 +30,19 @@ def safe_download_button(**kwargs):
     This helps capture the real exception in the Streamlit logs when a
     download fails to be created in the cloud environment.
     """
+    # Normalize kwargs for compatibility across Streamlit versions
+    # Some versions of Streamlit do not accept a `type` kwarg for download_button
+    if 'type' in kwargs:
+        # remove styling-related arg (used by st.button) which is invalid here
+        kwargs.pop('type')
+
+    # Log the outgoing kwargs for easier debugging in the cloud logs
+    try:
+        st.write(f"Creando download_button con kwargs: { {k: (type(v).__name__) for k,v in kwargs.items()} }")
+    except Exception:
+        # Best-effort: if st.write fails in some env, ignore
+        pass
+
     try:
         return st.download_button(**kwargs)
     except Exception as e:
