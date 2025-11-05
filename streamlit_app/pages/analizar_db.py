@@ -24,6 +24,24 @@ from streamlit_app.utils_streamlit import (
 )
 
 
+def safe_download_button(**kwargs):
+    """Wrapper for st.download_button that logs exceptions to the app UI.
+
+    This helps capture the real exception in the Streamlit logs when a
+    download fails to be created in the cloud environment.
+    """
+    try:
+        return st.download_button(**kwargs)
+    except Exception as e:
+        # Show a friendly error to the user and the exception details for debugging
+        st.error(f"Error al crear botón de descarga '{kwargs.get('label', '')}'. Revisa los logs.")
+        st.write(repr(e))
+        import traceback
+        st.text(traceback.format_exc())
+        return None
+
+
+
 def show():
     """Función principal que muestra la página de análisis"""
     
@@ -422,7 +440,7 @@ def show():
                 st.session_state.archivo_nombre
             )
             
-            st.download_button(
+            safe_download_button(
                 label="DESCARGAR TODO (ZIP)",
                 data=zip_completo,
                 file_name=nombre_archivo_zip,
@@ -448,7 +466,7 @@ def show():
             
             with col1:
                 excel_filtrado = exportar_a_excel(resultados['df_filtrado'], "datos_filtrados")
-                st.download_button(
+                safe_download_button(
                     label="Datos Filtrados",
                     data=excel_filtrado,
                     file_name="datos_filtrados.xlsx",
@@ -458,7 +476,7 @@ def show():
             
             with col2:
                 excel_suma = exportar_a_excel(resultados['df_suma_hora'], "suma_15min")
-                st.download_button(
+                safe_download_button(
                     label="Suma 15 min",
                     data=excel_suma,
                     file_name="suma_15min.xlsx",
@@ -468,7 +486,7 @@ def show():
             
             with col3:
                 excel_rango = exportar_a_excel(resultados['df_rango_hora'], "rango_hora")
-                st.download_button(
+                safe_download_button(
                     label="Rango Hora",
                     data=excel_rango,
                     file_name="rango_hora.xlsx",
@@ -486,7 +504,7 @@ def show():
             
             with col1:
                 html_barras = exportar_grafico_html(resultados['graficos']['barras'])
-                st.download_button(
+                safe_download_button(
                     label="Hora Pico (HTML)",
                     data=html_barras,
                     file_name="grafico_hora_pico.html",
@@ -496,7 +514,7 @@ def show():
             
             with col2:
                 html_apiladas = exportar_grafico_html(resultados['graficos']['barras_apiladas'])
-                st.download_button(
+                safe_download_button(
                     label="Barras Apiladas (HTML)",
                     data=html_apiladas,
                     file_name="grafico_barras_apiladas.html",
@@ -506,7 +524,7 @@ def show():
             
             with col3:
                 html_torta = exportar_grafico_html(resultados['graficos']['torta'])
-                st.download_button(
+                safe_download_button(
                     label="Composición (HTML)",
                     data=html_torta,
                     file_name="grafico_composicion.html",
@@ -523,7 +541,7 @@ def show():
             
             with col1:
                 hora_pico_txt = resultados['hora_pico'].encode('utf-8')
-                st.download_button(
+                safe_download_button(
                     label="Hora Pico (TXT)",
                     data=hora_pico_txt,
                     file_name="hora_pico.txt",
