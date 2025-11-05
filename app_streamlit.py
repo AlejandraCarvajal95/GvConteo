@@ -100,7 +100,13 @@ def main():
     # Sidebar para navegación (por si en el futuro agregas más páginas)
     with st.sidebar:
         # Logo en el sidebar
-        st.image("assets/logogv.png", use_container_width=True)
+        try:
+            st.image("assets/logogv.png", use_container_width=True)
+        except Exception as _e:
+            # Log the exception to Streamlit logs and show a friendly message
+            st.error("No se pudo mostrar el logo en el sidebar (ver logs).")
+            # Also write the exception details so Streamlit captures them in the app log
+            st.write(f"Logo load error: {_e!r}")
         st.markdown("---")
         st.header("Navegación")
         
