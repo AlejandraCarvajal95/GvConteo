@@ -458,8 +458,7 @@ def show():
                 data=zip_completo,
                 file_name=nombre_archivo_zip,
                 mime="application/zip",
-                use_container_width=True,
-                type="primary"
+                use_container_width=True
             )
             
             st.markdown("**Contenido del ZIP:**")
