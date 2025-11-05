@@ -101,7 +101,8 @@ def main():
     with st.sidebar:
         # Logo en el sidebar
         try:
-            st.image("assets/logogv.png", use_container_width=True)
+            # use a fixed width to remain compatible with older/newer Streamlit APIs
+            st.image("assets/logogv.png", width=250)
         except Exception as _e:
             # Log the exception to Streamlit logs and show a friendly message
             st.error("No se pudo mostrar el logo en el sidebar (ver logs).")
