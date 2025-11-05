@@ -14,7 +14,6 @@ sys.path.append(parent_path)
 
 from conteo import database_reader
 from conteo import data_filter
-from conteo import filters_apply
 from conteo import df_generator
 from conteo import graph_generator
 from conteo import config
